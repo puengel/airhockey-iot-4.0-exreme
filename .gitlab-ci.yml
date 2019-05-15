@@ -1,0 +1,19 @@
+stages:
+  - test
+  - deploy
+
+
+tests:
+  stage: test
+  script: echo "Hello"
+
+
+gulp-rsync:
+  stage: deploy
+  script:
+    - rsync --exclude README.md --exclude LICENSE.md --exclude .gitlab-ci.yml --exclude .gitignore -a . /srv/http/miefbu.de/
+  environment:
+    name: Airhockey
+    url: https://miefbu.de
+  only:
+    - master
